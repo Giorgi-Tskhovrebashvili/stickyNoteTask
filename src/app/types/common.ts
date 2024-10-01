@@ -1,5 +1,3 @@
-import exp from "constants";
-
 export interface MainLayoutProps {
   children: React.ReactNode;
 }

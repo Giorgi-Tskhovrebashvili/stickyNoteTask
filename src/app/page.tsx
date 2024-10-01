@@ -1,13 +1,24 @@
 "use client"
 import MainLayout from "./components/layouts/MainLayout";
 import Button from "./components/Button/Button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "./components/Popup/Popup";
 import { Note } from "./types";
 
 export default function Home() {
   const [showColors, setShowColors] = useState(false)
   const [stickyNote, setStickyNote] = useState<Note[]>([])
+
+  useEffect(() => {
+    const storedNotes = localStorage.getItem("notes");
+    if (storedNotes) {
+      setStickyNote(JSON.parse(storedNotes));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(stickyNote));
+  }, [stickyNote]);
 
   const handleShowColors = () => setShowColors(!showColors)
 
