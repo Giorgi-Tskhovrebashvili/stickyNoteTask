@@ -1,11 +1,9 @@
 "use client"
 import MainLayout from "./components/layouts/MainLayout";
 import Button from "./components/Button/Button";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Popup from "./components/Popup/Popup";
 import { Note } from "./types";
-import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import TaskNote from "./components/Note/TaskNote";
 
 export default function Home() {
   const [showColors, setShowColors] = useState(false)

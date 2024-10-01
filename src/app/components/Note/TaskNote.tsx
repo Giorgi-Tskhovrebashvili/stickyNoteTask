@@ -58,8 +58,9 @@ const TaskNote = () => {
           ❌
         </Button>
         <Button
-          className={"text-white bg-blue-500 p-2 rounded-full"}
-          onClick={downloadNote}
+          className={"text-white bg-blue-500 p-2 rounded-full"} onClick={function (event: any): void {
+            throw new Error("Function not implemented.");
+          } }          
         >
           📥
         </Button>
