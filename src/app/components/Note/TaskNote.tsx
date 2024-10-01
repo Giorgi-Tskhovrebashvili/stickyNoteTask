@@ -38,33 +38,8 @@ const TaskNote = () => {
     setTaskNote((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
-  const toggleTaskCompletion = (taskId: number) => {
-    setTaskNote((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-
   return (
     <div>
-      <div className="flex space-x-2 p-2 justify-end">
-        <Button
-          className={"text-red-500 bg-white p-2 rounded-full"}
-          onClick={function (event: any): void {
-            throw new Error("Function not implemented.");
-          }}
-        >
-          ❌
-        </Button>
-        <Button
-          className={"text-white bg-blue-500 p-2 rounded-full"} onClick={function (event: any): void {
-            throw new Error("Function not implemented.");
-          } }          
-        >
-          📥
-        </Button>
-      </div>
       <div className="flex gap-2 mb-4">
         <Input
           className={"mt-2 w-full p-2 border rounded h-10"}
@@ -81,30 +56,6 @@ const TaskNote = () => {
         >
           Add
         </Button>
-        {taskNote.map((task) => (
-          <div
-            key={task.id}
-            className="flex items-center justify-between gap-8"
-          >
-            <Input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTaskCompletion(task.id)}
-              className="form-checkbox"
-              placeholder={""}
-              name={""}
-            />
-            <span className={task.completed ? "line-through" : ""}>
-              {task.text}
-            </span>
-            <Button
-              onClick={() => deleteTask(task.id)}
-              className="text-red-500"
-            >
-              ❌
-            </Button>
-          </div>
-        ))}
       </div>
     </div>
   );
