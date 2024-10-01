@@ -40,6 +40,14 @@ const TaskNote = () => {
 
   return (
     <div>
+      <div className="flex space-x-2 p-2 justify-end">
+        <Button
+          className={"text-red-500 bg-white p-2 rounded-full"}
+          onClick={deleteTask}
+        >
+          ❌
+        </Button>
+      </div>
       <div className="flex gap-2 mb-4">
         <Input
           className={"mt-2 w-full p-2 border rounded h-10"}
