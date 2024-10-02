@@ -3,22 +3,27 @@ import { ToastContainer, toast } from "react-toastify";
 import { Task, TaskNoteType } from "@/app/types/common";
 import { Button, Input } from "..";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  loadTasksFromLocalStorage,
+  saveTasksToLocalStorage,
+} from "@/app/utils/localStorage";
+import { downloadNoteContent } from "@/app/utils/noteDownload";
 
 const TaskNote = ({ color, onRemove, taskId }: TaskNoteType) => {
   const [taskNote, setTaskNote] = useState<Task[]>([]);
   const [inputTask, setInputTask] = useState("");
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem("todos");
-    if (storedTodos) {
-      setTaskNote(JSON.parse(storedTodos));
-    }
-  }, []);
+    setTaskNote(loadTasksFromLocalStorage(taskId));
+  }, [taskId]);
 
-  
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(taskNote));
-  }, [taskNote]);
+    if (taskNote.length > 0) {
+      saveTasksToLocalStorage(taskId, taskNote);
+    } else {
+      localStorage.removeItem(taskId);
+    }
+  }, [taskNote, taskId]);
 
   const addTask = () => {
     if (inputTask.trim() === "") {
@@ -58,13 +63,17 @@ const TaskNote = ({ color, onRemove, taskId }: TaskNoteType) => {
     setTaskNote((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
+  const downloadNote = () => {
+    downloadNoteContent(taskId, taskNote);
+  };
+
   const removeNote = () => {
     onRemove(taskId);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputTask(event.target.value);
-  }
+  };
 
   return (
     <div
@@ -78,11 +87,12 @@ const TaskNote = ({ color, onRemove, taskId }: TaskNoteType) => {
           >
             ❌
           </Button>
-          <span
+          <Button
             className={"text-white bg-blue-500 p-2 rounded-full"}
+            onClick={downloadNote}
           >
             📥
-          </span>
+          </Button>
         </div>
         <div className="flex gap-2 mb-4">
           <Input
