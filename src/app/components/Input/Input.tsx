@@ -7,8 +7,8 @@ const Input = ({
   onChange,
   value,
   name,
-    onKeyDown,
-  checked
+  onKeyDown,
+  checked,
 }: InputType) => {
   return (
     <input
@@ -18,8 +18,8 @@ const Input = ({
       onChange={onChange}
       value={value}
       name={name}
-          onKeyDown={onKeyDown}
-          checked={checked}
+      onKeyDown={onKeyDown}
+      checked={checked}
     />
   );
 };

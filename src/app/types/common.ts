@@ -15,7 +15,7 @@ export interface InputType {
   placeholder: string;
   onChange: (event: any) => void;
   value?: string;
-  name: string;
+  name?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   checked?: boolean;
 }
@@ -40,4 +40,10 @@ export interface NoteProps {
 export type Note = {
   id: string;
   color: string;
+};
+
+export type TaskNoteType = {
+  color: string;
+  onRemove: (id: string) => void;
+  taskId: string;
 };

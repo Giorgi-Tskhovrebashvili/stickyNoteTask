@@ -2,11 +2,10 @@ import React from "react";
 import Button from "../Button/Button";
 import { PopupType } from "@/app/types";
 
-const Popup = ({onClick, className}: PopupType) => {
+const Popup = ({ onClick, className }: PopupType) => {
   return (
     <div className={className}>
-          <Button
-              key=""
+      <Button
         className={"w-12 h-12 rounded-full bg-yellow-200"}
         onClick={onClick}
       />
@@ -21,8 +20,8 @@ const Popup = ({onClick, className}: PopupType) => {
       <Button
         className={"w-12 h-12 rounded-full bg-red-200"}
         onClick={onClick}
-          />
-          <Button
+      />
+      <Button
         className={"w-12 h-12 rounded-full bg-purple-200"}
         onClick={onClick}
       />

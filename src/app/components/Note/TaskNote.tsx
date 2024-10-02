@@ -1,12 +1,24 @@
-import React, { useState } from "react";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
-import { toast } from "react-toastify";
-import { Task } from "@/app/types/common";
+import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { Task, TaskNoteType } from "@/app/types/common";
+import { Button, Input } from "..";
+import "react-toastify/dist/ReactToastify.css";
 
-const TaskNote = () => {
+const TaskNote = ({ color, onRemove, taskId }: TaskNoteType) => {
   const [taskNote, setTaskNote] = useState<Task[]>([]);
   const [inputTask, setInputTask] = useState("");
+
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      setTaskNote(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(taskNote));
+  }, [taskNote]);
 
   const addTask = () => {
     if (inputTask.trim() === "") {
@@ -17,7 +29,7 @@ const TaskNote = () => {
     } else {
       const newTask: Task = {
         id: Date.now(),
-        text: inputTask.trim(),
+        text: inputTask,
         completed: false,
       };
       setTaskNote((prev) => [...prev, newTask]);
@@ -34,37 +46,84 @@ const TaskNote = () => {
     }
   };
 
+  const toggleTaskCompletion = (taskId: number) => {
+    setTaskNote((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
   const deleteTask = (taskId: number) => {
     setTaskNote((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
+  const removeNote = () => {
+    onRemove(taskId);
+  };
+
   return (
-    <div>
-      <div className="flex space-x-2 p-2 justify-end">
-        <Button
-          className={"text-red-500 bg-white p-2 rounded-full"}
-          onClick={deleteTask}
-        >
-          ❌
-        </Button>
+    <div
+      className={`${color} relative flex flex-col p-4 m-4 border rounded-lg shadow-lg `}
+    >
+      <div className="space-y-2 mb-12">
+        <div className="flex space-x-2 p-2 justify-end">
+          <Button
+            className={"text-red-500 bg-white p-2 rounded-full"}
+            onClick={removeNote}
+          >
+            ❌
+          </Button>
+          <Button
+            className={"text-white bg-blue-500 p-2 rounded-full"}
+            onClick={function (event: any): void {
+              throw new Error("Function not implemented.");
+            }}
+          >
+            📥
+          </Button>
+        </div>
+        <div className="flex gap-2 mb-4">
+          <Input
+            className={"mt-2 w-full p-2 border rounded h-10"}
+            type={"text"}
+            placeholder={""}
+            onChange={(e) => setInputTask(e.target.value)}
+            name={""}
+            onKeyDown={handleKeyDown}
+            value={inputTask}
+          />
+          <Button
+            className={"mt-2 bg-green-500 text-white p-2 rounded h-10 w-24"}
+            onClick={addTask}
+          >
+            Add
+          </Button>
+        </div>
       </div>
-      <div className="flex gap-2 mb-4">
-        <Input
-          className={"mt-2 w-full p-2 border rounded h-10"}
-          type={"text"}
-          placeholder={""}
-          onChange={(e) => setInputTask(e.target.value)}
-          name={""}
-          onKeyDown={handleKeyDown}
-          value={inputTask}
-        />
-        <Button
-          className={"mt-2 bg-green-500 text-white p-2 rounded h-10 w-24"}
-          onClick={addTask}
-        >
-          Add
-        </Button>
+      <div>
+        {taskNote.map((task) => (
+          <div key={task.id} className="flex justify-between mb-4">
+            <Input
+              className={"form-checkbox"}
+              type={"checkbox"}
+              placeholder={""}
+              onChange={() => toggleTaskCompletion(task.id)}
+              checked={task.completed}
+            />
+            <span className={task.completed ? "line-through" : ""}>
+              {task.text}
+            </span>
+            <Button
+              className={"text-red-500"}
+              onClick={() => deleteTask(task.id)}
+            >
+              ❌
+            </Button>
+          </div>
+        ))}
       </div>
+      <ToastContainer />
     </div>
   );
 };
