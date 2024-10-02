@@ -62,6 +62,10 @@ const TaskNote = ({ color, onRemove, taskId }: TaskNoteType) => {
     onRemove(taskId);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputTask(event.target.value);
+  }
+
   return (
     <div
       className={`${color} relative flex flex-col p-4 m-4 border rounded-lg shadow-lg `}
@@ -74,21 +78,18 @@ const TaskNote = ({ color, onRemove, taskId }: TaskNoteType) => {
           >
             ❌
           </Button>
-          <Button
+          <span
             className={"text-white bg-blue-500 p-2 rounded-full"}
-            onClick={function (event: any): void {
-              throw new Error("Function not implemented.");
-            }}
           >
             📥
-          </Button>
+          </span>
         </div>
         <div className="flex gap-2 mb-4">
           <Input
             className={"mt-2 w-full p-2 border rounded h-10"}
             type={"text"}
             placeholder={""}
-            onChange={(e) => setInputTask(e.target.value)}
+            onChange={handleChange}
             name={""}
             onKeyDown={handleKeyDown}
             value={inputTask}

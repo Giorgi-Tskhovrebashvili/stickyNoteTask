@@ -1,31 +1,27 @@
+import { ReactNode } from "react";
+
 export interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 export interface ButtonType {
   className: string;
-  onClick: (event: any) => void;
-  children?: string;
-  key?: string;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  children?: ReactNode;
 }
 
 export interface InputType {
   className: string;
   type: "text" | "checkbox";
   placeholder: string;
-  onChange: (event: any) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   name?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   checked?: boolean;
 }
 
-export interface PopupType {
-  onClick: (event: any) => void;
-  className: string;
-}
-
-export type Task = {
+export interface Task {
   id: number;
   text: string;
   completed: boolean;
@@ -37,13 +33,13 @@ export interface NoteProps {
   onRemove: (id: string) => void;
 }
 
-export type Note = {
+export interface Note {
   id: string;
   color: string;
 };
 
-export type TaskNoteType = {
-  color: string;
-  onRemove: (id: string) => void;
-  taskId: string;
-};
+export interface TaskNoteType {
+    color: string;
+    onRemove: (id: string) => void; 
+    taskId: string;
+  };

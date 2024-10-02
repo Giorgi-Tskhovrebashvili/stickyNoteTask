@@ -1,8 +1,8 @@
 import { ButtonType } from "@/app/types/common";
 
-const Button = ({ onClick, className, children, key }: ButtonType) => {
+const Button = ({ onClick, className, children }: ButtonType) => {
   return (
-    <button className={className} onClick={onClick} key={key}>
+    <button className={className} onClick={onClick}>
       {children}
     </button>
   );
