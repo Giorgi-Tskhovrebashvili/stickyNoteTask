@@ -25,7 +25,7 @@ export interface Task {
   id: number;
   text: string;
   completed: boolean;
-};
+}
 
 export interface NoteProps {
   noteId: string;
@@ -36,10 +36,11 @@ export interface NoteProps {
 export interface Note {
   id: string;
   color: string;
-};
+}
 
 export interface TaskNoteType {
-    color: string;
-    onRemove: (id: string) => void; 
-    taskId: string;
-  };
+  color: string;
+  onRemove: (id: string) => void;
+  taskId: string;
+  index: number;
+}

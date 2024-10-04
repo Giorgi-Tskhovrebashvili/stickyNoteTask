@@ -1,4 +1,4 @@
-import { ButtonType } from "@/app/types/common";
+import { ButtonType } from "@/app/common/types/common";
 
 const Button = ({ onClick, className, children }: ButtonType) => {
   return (
